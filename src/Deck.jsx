@@ -1,12 +1,11 @@
-import axios from 'axios'
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import Card from './Card'
 
+const API_URL = 'https://www.deckofcardsapi.com/api/deck/new/shuffle/'
+
 export default class Deck extends Component {
-  static defaultProps = {
-    url: `https://www.deckofcardsapi.com/api/deck/new/shuffle/`,
-  }
   constructor(props) {
     super(props)
     this.state = {
@@ -18,7 +17,7 @@ export default class Deck extends Component {
   }
 
   async componentDidMount() {
-    const response = await axios.get(this.props.url)
+    const response = await axios.get(API_URL)
     const data = response.data
     this.setState({ deckId: data.deck_id, remaining: data.remaining })
   }
@@ -46,7 +45,7 @@ export default class Deck extends Component {
 
     return (
       <div className="flex flex-col items-center h-screen bg-green-800 select-none">
-        <header className="flex flex-col items-center mb-10">
+        <header className="flex flex-col items-center mb-12">
           <h1 className="text-2xl pt-4 pb-2 tracking-wider text-white">
             &diams; card dealer &diams;
           </h1>
