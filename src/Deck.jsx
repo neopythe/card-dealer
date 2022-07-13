@@ -28,21 +28,25 @@ export default class Deck extends Component {
     const url = `https://www.deckofcardsapi.com/api/deck/${deckId}/draw/`
     const response = await axios.get(url)
     const { remaining, cards } = response.data
-    this.setState({ cards: [...this.state.cards, ...cards], remaining })
+    this.setState({ cards: [...this.state.cards, cards[0]], remaining })
   }
 
   render() {
     const pile = (
       <section>
         {this.state.cards.map((card, index) => (
-          <Card key={index} />
+          <Card
+            key={index}
+            imageUrl={card.image}
+            alt={`${card.value} of ${card.suit}`.toLowerCase()}
+          />
         ))}
       </section>
     )
 
     return (
       <div className="flex flex-col items-center h-screen bg-green-800">
-        <header className="flex flex-col items-center">
+        <header className="flex flex-col items-center mb-10">
           <h1 className="text-2xl pt-4 pb-2 tracking-wider text-white">
             &#9830; card dealer &#9830;
           </h1>
@@ -51,6 +55,7 @@ export default class Deck extends Component {
           </p>
           <button
             onClick={this.drawCard}
+            disabled={this.state.remaining < 1}
             className="btn btn-sm m-4 px-8 lowercase"
           >
             hit me
