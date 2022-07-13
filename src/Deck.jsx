@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { debounce } from 'lodash'
 
 import Card from './Card'
 
-const API_URL = 'https://www.deckofcardsapi.com/api/deck/new/shuffle/'
+const API_BASE_URL = 'https://www.deckofcardsapi.com/api/deck'
 
 export default class Deck extends Component {
   constructor(props) {
@@ -17,17 +18,21 @@ export default class Deck extends Component {
   }
 
   async componentDidMount() {
-    const response = await axios.get(API_URL)
+    const response = await axios.get(`${API_BASE_URL}/new/shuffle/`)
     const data = response.data
     this.setState({ deckId: data.deck_id, remaining: data.remaining })
   }
 
   async drawCard() {
-    const { deckId } = this.state
-    const url = `https://www.deckofcardsapi.com/api/deck/${deckId}/draw/`
-    const response = await axios.get(url)
-    const { remaining, cards } = response.data
-    this.setState({ cards: [...this.state.cards, cards[0]], remaining })
+    try {
+      const {
+        data: { remaining, cards, success },
+      } = await axios.get(`${API_BASE_URL}/${this.state.deckId}/draw/`)
+      if (!success) throw new Error('No card remaining!')
+      this.setState({ cards: [...this.state.cards, cards[0]], remaining })
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   render() {
@@ -53,7 +58,7 @@ export default class Deck extends Component {
             &hearts; made with React &hearts;
           </p>
           <button
-            onClick={this.drawCard}
+            onClick={debounce(this.drawCard, 100)}
             disabled={this.state.remaining < 1}
             className="btn btn-sm m-4 px-8 lowercase"
           >
