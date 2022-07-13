@@ -49,18 +49,23 @@ export default class Deck extends Component {
     )
 
     return (
-      <div className="flex flex-col items-center h-screen bg-green-800 select-none">
-        <header className="flex flex-col items-center mb-12">
-          <h1 className="text-2xl pt-4 pb-2 tracking-wider text-white">
+      <div
+        style={{
+          fontFamily: `'Slabo 27px', serif`,
+        }}
+        className="flex flex-col items-center h-screen bg-green-800 select-none"
+      >
+        <header className="flex flex-col items-center mb-24">
+          <h1 className="text-3xl pt-4 pb-2 tracking-widest text-white">
             &diams; card dealer &diams;
           </h1>
-          <p className="tracking-wider text-white">
+          <p className="tracking-wider text-white mb-2">
             &hearts; made with React &hearts;
           </p>
           <button
             onClick={debounce(this.drawCard, 100)}
             disabled={this.state.remaining < 1}
-            className="btn btn-sm m-4 px-8 lowercase"
+            className="btn btn-sm m-4 px-10 tracking-wider lowercase"
           >
             hit me
           </button>

@@ -1,26 +1,20 @@
 import React, { Component } from 'react'
 
-import styled from 'styled-components'
-
-const Img = styled.img`
-  animation: slide-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-
-  @keyframes slide-top {
-    0% {
-      transform: translateY(200px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-`
-
 export default class Card extends Component {
+  constructor(props) {
+    super(props)
+    const angle = Math.random() * 90 - 45
+    const xPos = Math.random() * 40 - 20
+    const yPos = Math.random() * 40 - 20
+    this._transform = `translate(${xPos}px, ${yPos}px) rotate(${angle}deg)`
+  }
+
   render() {
     return (
-      <Img
+      <img
         src={this.props.imageUrl}
         alt={this.props.alt}
+        style={{ transform: this._transform }}
         className="absolute left-0 right-0 mx-auto"
       />
     )
