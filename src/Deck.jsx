@@ -45,13 +45,13 @@ export default class Deck extends Component {
     )
 
     return (
-      <div className="flex flex-col items-center h-screen bg-green-800">
+      <div className="flex flex-col items-center h-screen bg-green-800 select-none">
         <header className="flex flex-col items-center mb-10">
           <h1 className="text-2xl pt-4 pb-2 tracking-wider text-white">
-            &#9830; card dealer &#9830;
+            &diams; card dealer &diams;
           </h1>
           <p className="tracking-wider text-white">
-            &#9830; made with React &#9830;
+            &hearts; made with React &hearts;
           </p>
           <button
             onClick={this.drawCard}
